@@ -1,6 +1,6 @@
-# MS-NET-CENTER
-E-Sevai Center
 # MS Net Centre - Website
+
+A responsive single-page website for **MS Net Centre**, an e-Sevai centre located in Nochimedu, Manjampatti, Manapparai, Trichy.
 
 ## About
 
@@ -41,3 +41,7 @@ No build tools or dependencies required — it's a static website.
 ├── script.js    — Interactive functionality
 └── README.md    — This file
 ```
+
+## Contact
+
+- **WhatsApp:** [+91 99626 92369](https://wa.me/919962692369)
