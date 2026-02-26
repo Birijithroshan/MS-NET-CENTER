@@ -42,6 +42,3 @@ No build tools or dependencies required — it's a static website.
 └── README.md    — This file
 ```
 
-## Contact
-
-- **WhatsApp:** [+91 99626 92369](https://wa.me/919962692369)
