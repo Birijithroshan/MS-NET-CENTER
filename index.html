@@ -17,21 +17,16 @@
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader">
-            <div class="loader-computer">
-                <svg viewBox="0 0 120 100" width="120" height="100">
-                    <rect x="15" y="5" width="90" height="60" rx="6" fill="none" stroke="#ff6f00" stroke-width="3" class="monitor-outline"/>
-                    <rect x="22" y="12" width="76" height="46" rx="3" fill="rgba(255,111,0,0.15)" class="monitor-screen"/>
-                    <line x1="35" y1="25" x2="75" y2="25" stroke="#fff" stroke-width="2" opacity="0.6" class="code-line cl1"/>
-                    <line x1="35" y1="33" x2="85" y2="33" stroke="#ff6f00" stroke-width="2" opacity="0.8" class="code-line cl2"/>
-                    <line x1="35" y1="41" x2="65" y2="41" stroke="#4a90e2" stroke-width="2" opacity="0.7" class="code-line cl3"/>
-                    <line x1="35" y1="49" x2="80" y2="49" stroke="#fff" stroke-width="2" opacity="0.5" class="code-line cl4"/>
-                    <rect x="45" y="65" width="30" height="8" rx="1" fill="none" stroke="#ff6f00" stroke-width="2"/>
-                    <rect x="30" y="73" width="60" height="5" rx="3" fill="none" stroke="#ff6f00" stroke-width="2"/>
-                    <circle cx="60" cy="59" r="2" fill="#ff6f00" class="power-dot"/>
-                </svg>
+            <div class="loader-rings">
+                <div class="ring ring-1"></div>
+                <div class="ring ring-2"></div>
+                <div class="ring ring-3"></div>
+                <div class="loader-center-icon">MS</div>
             </div>
-            <p class="loader-title">MS NET CENTRE</p>
+            <p class="loader-title">NET CENTRE</p>
+            <div class="loader-tagline">e-Sevai &bull; Digital Services</div>
             <div class="loader-bar"><div class="loader-progress"></div></div>
+            <div class="loader-percent">0%</div>
         </div>
     </div>
 
@@ -82,20 +77,20 @@
             <div class="hero-computer">
                 <svg viewBox="0 0 200 160" width="200" height="160" class="computer-svg">
                     <rect x="25" y="10" width="150" height="100" rx="8" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="3" class="comp-monitor"/>
-                    <rect x="33" y="18" width="134" height="80" rx="4" fill="rgba(255,111,0,0.1)" class="comp-screen"/>
+                    <rect x="33" y="18" width="134" height="80" rx="4" fill="rgba(79,70,229,0.1)" class="comp-screen"/>
                     <!-- Animated code lines -->
-                    <line x1="45" y1="35" x2="100" y2="35" stroke="#ff6f00" stroke-width="2.5" stroke-linecap="round" class="typing-line t1"/>
+                    <line x1="45" y1="35" x2="100" y2="35" stroke="#818CF8" stroke-width="2.5" stroke-linecap="round" class="typing-line t1"/>
                     <line x1="45" y1="47" x2="130" y2="47" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" class="typing-line t2"/>
-                    <line x1="55" y1="59" x2="115" y2="59" stroke="#4a90e2" stroke-width="2.5" stroke-linecap="round" class="typing-line t3"/>
+                    <line x1="55" y1="59" x2="115" y2="59" stroke="#06B6D4" stroke-width="2.5" stroke-linecap="round" class="typing-line t3"/>
                     <line x1="55" y1="71" x2="140" y2="71" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" class="typing-line t4"/>
-                    <line x1="45" y1="83" x2="95" y2="83" stroke="#00c853" stroke-width="2.5" stroke-linecap="round" class="typing-line t5"/>
+                    <line x1="45" y1="83" x2="95" y2="83" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" class="typing-line t5"/>
                     <!-- Cursor blink -->
                     <rect x="97" y="80" width="2" height="10" fill="#fff" class="cursor-blink"/>
                     <!-- Monitor base -->
                     <rect x="75" y="110" width="50" height="12" rx="2" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
                     <rect x="55" y="122" width="90" height="8" rx="4" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
                     <!-- Power indicator -->
-                    <circle cx="100" cy="104" r="3" fill="#00c853" class="power-blink"/>
+                    <circle cx="100" cy="104" r="3" fill="#10B981" class="power-blink"/>
                     <!-- WiFi signal -->
                     <path d="M150,25 Q155,20 160,25" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" class="wifi w1"/>
                     <path d="M148,20 Q155,13 162,20" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" class="wifi w2"/>
@@ -136,7 +131,7 @@
         </div>
         <div class="hero-wave">
             <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L0,120Z" fill="#ffffff"/>
+                <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L0,120Z" fill="#F8FAFC"/>
             </svg>
         </div>
     </section>
@@ -176,11 +171,11 @@
                             <svg viewBox="0 0 200 160" width="200" height="160">
                                 <rect x="25" y="10" width="150" height="100" rx="8" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="3"/>
                                 <rect x="33" y="18" width="134" height="80" rx="4" fill="rgba(255,255,255,0.1)"/>
-                                <line x1="50" y1="40" x2="110" y2="40" stroke="#ff6f00" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="50" y1="40" x2="110" y2="40" stroke="#818CF8" stroke-width="3" stroke-linecap="round"/>
                                 <line x1="50" y1="55" x2="145" y2="55" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
-                                <line x1="60" y1="70" x2="120" y2="70" stroke="#4a90e2" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="60" y1="70" x2="120" y2="70" stroke="#06B6D4" stroke-width="3" stroke-linecap="round"/>
                                 <line x1="50" y1="85" x2="100" y2="85" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round"/>
-                                <circle cx="100" cy="104" r="3" fill="#00c853"/>
+                                <circle cx="100" cy="104" r="3" fill="#10B981"/>
                                 <rect x="75" y="110" width="50" height="12" rx="2" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
                                 <rect x="55" y="122" width="90" height="8" rx="4" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
                             </svg>
@@ -782,7 +777,7 @@
     <footer class="footer">
         <div class="footer-wave">
             <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,0L0,0Z" fill="#ffffff"/>
+                <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,0L0,0Z" fill="#F8FAFC"/>
             </svg>
         </div>
         <div class="container">

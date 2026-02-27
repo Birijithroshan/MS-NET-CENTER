@@ -1,14 +1,35 @@
-/* ========================================
-   MS Net Centre - JavaScript
+﻿/* ========================================
+   MS Net Centre - Enhanced JavaScript
    ======================================== */
 
-// Preloader
-window.addEventListener('load', () => {
+// Preloader with percentage counter
+(function() {
+    const progress = document.querySelector('.loader-progress');
+    const percentEl = document.querySelector('.loader-percent');
     const preloader = document.getElementById('preloader');
+    let loaded = 0;
+    
+    const interval = setInterval(() => {
+        loaded += Math.random() * 8 + 2;
+        if (loaded >= 100) {
+            loaded = 100;
+            clearInterval(interval);
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+            }, 400);
+        }
+        progress.style.width = loaded + '%';
+        if (percentEl) percentEl.textContent = Math.floor(loaded) + '%';
+    }, 80);
+    
+    // Fallback: force hide after 3s
     setTimeout(() => {
-        preloader.classList.add('hidden');
-    }, 1500);
-});
+        clearInterval(interval);
+        if (progress) progress.style.width = '100%';
+        if (percentEl) percentEl.textContent = '100%';
+        setTimeout(() => preloader.classList.add('hidden'), 300);
+    }, 3000);
+})();
 
 // Navbar Scroll Effect
 const navbar = document.getElementById('navbar');
@@ -17,17 +38,15 @@ const backToTop = document.getElementById('backToTop');
 window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     
-    // Navbar background
     if (scrollY > 50) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
     
-    // Back to top button
-    if (scrollY > 400) {
+    if (backToTop && scrollY > 400) {
         backToTop.classList.add('visible');
-    } else {
+    } else if (backToTop) {
         backToTop.classList.remove('visible');
     }
 });
@@ -41,7 +60,6 @@ navToggle.addEventListener('click', () => {
     navToggle.classList.toggle('active');
 });
 
-// Close mobile nav on link click
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         navLinks.classList.remove('active');
@@ -63,7 +81,7 @@ function setActiveLink() {
         if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
+                if (link.getAttribute('href') === '#' + sectionId) {
                     link.classList.add('active');
                 }
             });
@@ -80,20 +98,27 @@ function animateCounters() {
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-count'));
         const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
+        const startTime = performance.now();
         
-        const updateCounter = () => {
-            current += step;
-            if (current < target) {
-                counter.textContent = Math.floor(current);
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+        
+        function updateCounter(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = easeOutCubic(progress);
+            
+            counter.textContent = Math.floor(easedProgress * target);
+            
+            if (progress < 1) {
                 requestAnimationFrame(updateCounter);
             } else {
                 counter.textContent = target;
             }
-        };
+        }
         
-        updateCounter();
+        requestAnimationFrame(updateCounter);
     });
 }
 
@@ -101,36 +126,49 @@ function animateCounters() {
 const heroSection = document.querySelector('.hero');
 let counterAnimated = false;
 
-const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && !counterAnimated) {
-            counterAnimated = true;
-            setTimeout(animateCounters, 500);
-        }
-    });
-}, { threshold: 0.3 });
+if (heroSection) {
+    const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !counterAnimated) {
+                counterAnimated = true;
+                setTimeout(animateCounters, 500);
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    heroObserver.observe(heroSection);
+}
 
-heroObserver.observe(heroSection);
-
-// Particle Effect
+// Particle Effect - Enhanced
 function createParticles() {
     const particlesContainer = document.getElementById('particles');
-    const particleCount = 30;
+    if (!particlesContainer) return;
+    
+    const particleCount = 35;
+    const colors = [
+        'rgba(129, 140, 248, 0.3)',
+        'rgba(249, 115, 22, 0.2)',
+        'rgba(6, 182, 212, 0.25)',
+        'rgba(255, 255, 255, 0.15)'
+    ];
     
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
         
-        const size = Math.random() * 6 + 2;
+        const size = Math.random() * 5 + 2;
         const left = Math.random() * 100;
-        const delay = Math.random() * 10;
-        const duration = Math.random() * 10 + 10;
+        const delay = Math.random() * 12;
+        const duration = Math.random() * 12 + 10;
+        const color = colors[Math.floor(Math.random() * colors.length)];
         
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${left}%`;
-        particle.style.animationDelay = `${delay}s`;
-        particle.style.animationDuration = `${duration}s`;
+        particle.style.cssText = 
+            'width:' + size + 'px;' +
+            'height:' + size + 'px;' +
+            'left:' + left + '%;' +
+            'animation-delay:' + delay + 's;' +
+            'animation-duration:' + duration + 's;' +
+            'background:' + color + ';';
         
         particlesContainer.appendChild(particle);
     }
@@ -138,73 +176,93 @@ function createParticles() {
 
 createParticles();
 
-// Scroll Reveal Animation
+// Scroll Reveal Animation - Improved
 function revealOnScroll() {
     const elements = document.querySelectorAll(
-        '.service-card, .esevai-card, .pricing-card, .why-card, .testimonial-card, .contact-card'
+        '.service-card, .esevai-card, .pricing-card, .why-card, .testimonial-card, .contact-card, .about-content, .image-frame'
     );
     
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 50);
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     
-    elements.forEach(element => {
+    elements.forEach((element, index) => {
         element.style.opacity = '0';
         element.style.transform = 'translateY(30px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        element.style.transition = 'opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) ' + (index % 6) * 0.08 + 's, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) ' + (index % 6) * 0.08 + 's';
         observer.observe(element);
     });
 }
 
 revealOnScroll();
 
+// Section header reveal animation
+function revealSectionHeaders() {
+    const headers = document.querySelectorAll('.section-header');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    headers.forEach(header => {
+        header.style.opacity = '0';
+        header.style.transform = 'translateY(25px)';
+        header.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        observer.observe(header);
+    });
+}
+
+revealSectionHeaders();
+
 // Contact Form
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const service = document.getElementById('service').value;
-    const message = document.getElementById('message').value;
-    
-    // Create WhatsApp message
-    const whatsappMessage = `🔔 *New Enquiry - MS Net Centre*%0A%0A` +
-        `👤 *Name:* ${name}%0A` +
-        `📱 *Phone:* ${phone}%0A` +
-        `📧 *Email:* ${email || 'Not provided'}%0A` +
-        `🔧 *Service:* ${service}%0A` +
-        `💬 *Message:* ${message}`;
-    
-    // Show success message
-    contactForm.innerHTML = `
-        <div class="form-success">
-            <i class="fas fa-check-circle"></i>
-            <h3>Thank You, ${name}!</h3>
-            <p>Your message has been received. We will contact you shortly.</p>
-            <p style="margin-top: 10px; font-size: 13px; color: #666;">
-                You can also reach us directly on WhatsApp for instant response.
-            </p>
-        </div>
-    `;
-    
-    // Scroll to form
-    contactForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-});
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const service = document.getElementById('service').value;
+        const message = document.getElementById('message').value;
+        
+        const whatsappMessage = encodeURIComponent(
+            ' *New Enquiry - MS Net Centre*\n\n' +
+            ' *Name:* ' + name + '\n' +
+            ' *Phone:* ' + phone + '\n' +
+            ' *Email:* ' + (email || 'Not provided') + '\n' +
+            ' *Service:* ' + service + '\n' +
+            ' *Message:* ' + message
+        );
+        
+        contactForm.innerHTML = 
+            '<div class="form-success">' +
+                '<i class="fas fa-check-circle"></i>' +
+                '<h3>Thank You, ' + name + '!</h3>' +
+                '<p>Your message has been received. We will contact you shortly.</p>' +
+                '<p style="margin-top: 10px; font-size: 13px; color: #64748B;">You can also reach us directly on WhatsApp for instant response.</p>' +
+            '</div>';
+        
+        contactForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+}
 
-// Smooth scroll for all anchor links
+// Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+    anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
@@ -213,23 +271,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Typing effect for hero subtitle (optional enhancement)
-function typeEffect(element, text, speed = 50) {
-    let i = 0;
-    element.textContent = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
-
-// Add hover tilt effect to service cards
+// 3D tilt effect on service cards
 document.querySelectorAll('.service-card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -237,10 +279,10 @@ document.querySelectorAll('.service-card').forEach(card => {
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
+        const rotateX = (y - centerY) / 25;
+        const rotateY = (centerX - x) / 25;
         
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+        card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-8px)';
     });
     
     card.addEventListener('mouseleave', () => {
@@ -255,5 +297,5 @@ if (yearSpan) {
     yearSpan.innerHTML = yearSpan.innerHTML.replace('2026', currentYear);
 }
 
-console.log('🖥️ MS Net Centre Website Loaded Successfully!');
-console.log('📍 Location: Nochimedu, Manjampatti, Manapparai, Trichy');
+console.log(' MS Net Centre - Premium Website Loaded');
+console.log(' Nochimedu, Manjampatti, Manapparai, Trichy');
